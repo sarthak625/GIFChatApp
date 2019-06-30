@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include partials/head %>
+
+<body>
+    <% include partials/navbar %>
+
+    <div class="landing container-fluid">
+        <div class="jumbotron">
+            <div class="container">
+                <h2>Welcome</h2>
+                This is a chat application that uses the GIPHY API to get relevant GIFS from within
+                your chat message. Just find the room you belong to and chat on!
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="container message-card">
+                    <div class="container icon">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <span>
+                        Find people like you and talk to them.
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="container message-card">
+                    <div class="container icon">
+                        <i class="fa fa-reddit"></i>
+                    </div>
+                    <span>
+                        Can be used as a live sub reddit.
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="container message-card">
+                    <div class="container icon">
+                        <i class="fa fa-code"></i>
+                    </div>
+                    <span>
+                        Made with <i class="fa fa-heart"></i> using Node JS and Socket.io
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container source-code">
+            You can view the <a href="#">source code</a> here.
+        </div>
+    </div>
+
+    <% include partials/footer %>
+</body>
+
+</html>

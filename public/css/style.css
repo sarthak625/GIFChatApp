@@ -1,0 +1,47 @@
+html,body{
+    height: 100%;
+}
+
+body{
+    font-family: 'Noto Sans HK', sans-serif!important;
+}
+
+.landing{
+    height: 100%;
+    margin-top: 15px;
+}
+
+.create-room{
+    margin-left: 60%;
+}
+
+.message-card {
+    height: 180px;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
+    text-align: center;
+}
+
+.icon{
+    font-size: 4rem;
+}
+
+footer{
+    text-align: center;
+}
+
+.source-code{
+    text-align: center;
+    margin-top: 80px;
+}
+
+.create-room-heading{
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .create-room{
+        margin-left: 0px;
+    }
+}
