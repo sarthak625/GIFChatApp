@@ -10,7 +10,7 @@
             <h1>Create your room</h1>
         </div>
         <div class="container">
-            <form action="/room/create" method="POST">
+            <form action="/room/create" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" name="name" class="form-control">
@@ -27,6 +27,7 @@
         </div>
     </div>
 
+    <% include partials/alert %>
     <% include partials/footer %>
 </body>
 

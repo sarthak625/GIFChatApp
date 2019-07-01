@@ -13,6 +13,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "socket.io": "^2.2.0",
+    "sweetalert": "^2.1.2",
     "uuid": "^3.3.2"
   },
   "devDependencies": {},

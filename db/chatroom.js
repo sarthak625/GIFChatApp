@@ -16,11 +16,6 @@ const chatRoom = new Schema({
     createdOn: Date
 });
 
-chatRoom.pre('save', function (next) {
-    return next();
-});
-
 const ChatRoom = connection.model('ChatRoom', chatRoom);
-
 
 module.exports = ChatRoom;
