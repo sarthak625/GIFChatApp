@@ -8,7 +8,13 @@ let errors = {
     RateLimiting : (message) => {
         return {
             code: 429,
-            message: message || 'You can only create upto a maximum of 10 rooms.'
+            message: message || 'Limit Reached'
+        }
+    },
+    Conflict : (message) => {
+        return {
+            code: 409,
+            message: message || 'Conflict'
         }
     }
 }

@@ -10,7 +10,11 @@ const chatRoom = new Schema({
             uuid()
         }
     },
-    name: String,
+    name: {
+        type: String,
+        unique: true,
+        required: true
+    },
     logo: Buffer,
     limit: Number,
     createdOn: Date

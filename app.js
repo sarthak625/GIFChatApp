@@ -21,8 +21,7 @@ app.use(logger('dev'));
 app.use(express.urlencoded({limit: '50mb' , extended: true}));
 
 // Routes
-app.use('/', require('./routes/main'));
-app.use('/room', require('./routes/rooms'));
+app.use('/', require('./routes/rooms'));
 
 // Listen on port
 let port = process.env.PORT || 3000;
