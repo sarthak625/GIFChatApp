@@ -32,15 +32,34 @@ var io = require('socket.io')(http);
 // Connect to DB
 require('./db/connect');
 
-io.on('connection', function(socket){
-    console.log('a user connected');
+// Server name
+const server = "SERVER";
 
-    socket.on('disconnect', function(){
-        console.log('The user got disconnected');
+io.on('connection', function(socket){
+
+    socket.on('addUser', (username, room) => {
+        console.log('Username: ',username);
+        console.log('Room: ',room);
+        
+        socket.username = username;
+        socket.room = room;
+        socket.join(room);
+
+        socket.emit('messageUser', server, `You have connected to room: ${room}`);
+        socket.broadcast.to(room).emit('connected', server, `${username} has connected to this room`);
+
     });
 
-    socket.on('some message', function(val){
+    socket.on('disconnect', function(){
+        console.log(`${socket.username} got disconnected`);
+        socket.broadcast.to(socket.room).emit('messageUser', server, `${socket.username} left this room`);
+    });
+
+    socket.on('chat message', function(message){
         console.log(`Message recieved at ${new Date()}`);
+        console.log(`Sending ${socket.username}, ${message}, ${socket.room}`);
+        socket.emit('messageUser', socket.username, message);
+        socket.broadcast.to(socket.room).emit('chat message', socket.username, message );
     })
 });
 

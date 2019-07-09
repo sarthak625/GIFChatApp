@@ -40,6 +40,15 @@ footer{
     text-align: center;
 }
 
+.chatbox {
+    height: 100%;
+}
+
+.chatbox #room-logo {
+    width: 40px;
+    height: 40px;
+}
+
 @media (max-width: 480px) {
     .create-room{
         margin-left: 0px;

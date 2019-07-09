@@ -16,6 +16,12 @@ let errors = {
             code: 409,
             message: message || 'Conflict'
         }
+    },
+    NotFound  : (message) => {
+        return {
+            code: 404,
+            message: message || 'Not Found'
+        }
     }
 }
 

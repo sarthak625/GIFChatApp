@@ -5,11 +5,54 @@
 <body>
     <% include partials/navbar %>
 
-    <div class="container-fluid">
-        
+
+    <div class="container-fluid chatbox">
+        <% rooms.forEach(room => { %>
+        <% if (locals.response.name){ %>
+        <% if (room.name === response.name) { %>
+        <img src="<%= response.logo %>" id="room-logo"></img>
+        <%= response.name %>
+        <% } %>
+        <% } %>
+        <% }) %>
+
+        <ul id="messages">
+            <li class="convo"></li>
+        </ul>
+        <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+        </form>
     </div>
 
+    <% include partials/alert %>
     <% include partials/footer %>
+
+    <script src="/js/socket.io.js"></script>
+    <script src="/js/jquery-1.11.1.js"></script>
+    <script>
+        $(function () {
+            var socket = io();
+
+            socket.on('connect', function(){
+                socket.emit('addUser', prompt('What is your name?'), "<%= response.name %>");
+            });
+
+            socket.on('messageUser', (username, data) => {
+                $('#messages').append(`<li> ${username}: ${data} </li>`);
+            });
+
+            $('form').submit(function (e) {
+                e.preventDefault(); // prevents page reloading
+                socket.emit('chat message', $('#m').val());
+                $('#m').val('');
+                return false;
+            });
+
+            socket.on('chat message', (username, message) => {
+                $('#messages').append(`<li> ${username}:  ${message} </li>`);
+            });
+        });
+    </script>
 </body>
 
-</html>
+</html> 
