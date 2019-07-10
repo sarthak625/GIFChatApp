@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include partials/head %>
+
+<body>
+    <% include partials/navbar %>
+
+    <div class="container rooms">
+        <div class="container-fluid">
+            <div class="row">
+                <% if (rooms.length === 0) { %>
+                    <span>Hey! You dont have any rooms yet! Please create some to continue.</span>
+                <% } %>
+                <% rooms.forEach( room => { %>
+                <div class="col-md-3 room-tile" onclick="window.location='/room/view/<%= room.name %>';" style="background-image: url('http://<%= room.logo %>')">
+                    <div class="overlay">
+                        <span class="room-name"><%= room.name %></span>
+                        <br><br>
+                        <span class="go-to-room">Go to room -></span>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+
+    <% include partials/alert %>
+    <% include partials/footer %>
+</body>
+
+</html>

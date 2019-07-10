@@ -69,6 +69,47 @@ body .chatbox {
     overflow-y: scroll;
 }
 
+.rooms {
+    height: 150%;
+}
+
+.rooms .container-fluid .row{
+    margin-left: 35px;
+}
+
+.rooms .container-fluid .row .room-tile{
+    height: 280px;
+    background-size: cover;
+    background-position: top;
+    padding: 0;
+    margin: 30px;
+    border-radius: 0.5rem;
+}
+
+.overlay{
+    width:100%;
+    height:100%;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 60px;
+    padding-top: 120px;
+    color: white;
+    border-radius: 0.5rem;
+}
+
+.overlay:hover{
+    background: rgba(0, 0, 0, 0.4);
+    font-size: 1.2rem;
+    transition: 450ms;
+}
+
+.go-to-room{
+    display: block;
+    font-style: italic;
+    text-decoration: underline;
+    text-emphasis: unset;
+}
+
 #send-button{
     display: none;
 }

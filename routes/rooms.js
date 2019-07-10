@@ -22,6 +22,10 @@ router.get('/', async (req, res) => {
     res.render('home', { rooms: await getAllRooms() });
 });
 
+router.get('/room/list', async(req,res) => {
+    res.render('rooms', { rooms: await getAllRooms() });
+});
+
 // Create a room => POST request
 router.post('/room/create', upload.single('logo'), async (req, res) => {
     try {
@@ -85,7 +89,7 @@ async function getAllRooms() {
         ({
             name: element.name,
             logo: `${process.env.IP}:${process.env.PORT}/room/logo/${element.name}`,
-            createdOn: element.createdOn
+            createdOn: element.createdOn.toDateString()
         }));
     return rooms;
 };

@@ -14,6 +14,7 @@
                 <% if (room.name === response.name) { %>
                 <img src="<%= response.logo %>" id="room-logo"></img>
                 <span class="room-name"><%= response.name %></span>
+                <span class="created-on" style="display:block; font-style:italic">Created on <%= room.createdOn %></span>
                 <% } %>
                 <% } %>
                 <% }) %>
