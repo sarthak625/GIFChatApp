@@ -9,7 +9,7 @@ require('dotenv').config();
 const redis = require('redis');
 let redisClient = redis.createClient({
     port : process.env.REDIS_PORT,
-    host : process.env.IP
+    host : process.env.REDIS_IP
 });
 
 redisClient.on('connect', ()=> console.log('Connected to redis successfully'));

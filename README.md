@@ -1,7 +1,7 @@
 # GIF Chat
 
-A multiroom chat application built on Node JS, Mongo DB and Socket.io
-It uses the giphy API to serve gifs during a chat session.
+A multiroom chat application built on Node JS, Mongo DB ,Socket.io and Redis
+It uses the giphy API to serve gifs during a chat session. 
 
 ## Installation
 
@@ -12,6 +12,10 @@ Create a .env file with the following env variables
 ```
 # Application PORT
 PORT=3000
+
+# REDIS PORT
+REDIS_PORT=<REDIS PORT>
+REDIS_IP=<REDIS IP>
 
 # GIPHY API Key
 GIPHY_API_KEY=<Your_GIPHY_API_KEY>
