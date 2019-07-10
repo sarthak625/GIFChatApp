@@ -3,8 +3,6 @@ const router = require('express').Router();
 const multer = require('multer')
 const fs = require('fs');
 const uuid = require('uuid/v1');
-const streamBuffers = require('stream-buffers');
-const giphy = require('../giphy/search');
 
 // Import Model
 const ChatRoom = require('../db/chatroom');
@@ -94,7 +92,7 @@ async function getAllRooms() {
 
 router.get('/room/view/:name', async (req, res) => {
     try {
-
+        
         let name = req.params.name;
         console.log(name);
         // Get db data for the name

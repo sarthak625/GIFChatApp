@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
+    "bootstrap-sweetalert": "^1.0.1",
     "dotenv": "^8.0.0",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
@@ -13,7 +14,6 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "socket.io": "^2.2.0",
-    "stream-buffers": "^3.0.2",
     "sweetalert": "^2.1.2",
     "uuid": "^3.3.2"
   },

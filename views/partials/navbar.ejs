@@ -25,3 +25,15 @@
     </form>
 </nav>
 
+<script>
+$("#search").on('input', function () {
+    var val = this.value;
+    if($('#rooms option').filter(function(){
+        return this.value.toUpperCase() === val.toUpperCase();        
+    }).length) {
+        // Change the room
+        window.location.href = `/room/view/${this.value}`;
+    }
+});
+</script>
+

@@ -6,6 +6,8 @@ const express = require('express');
 const logger = require('morgan');
 const path = require('path');
 
+const giphy = require('./giphy/search');
+
 const app = express();
 
 
@@ -35,6 +37,30 @@ require('./db/connect');
 // Server name
 const server = "SERVER";
 
+String.prototype.getQueryWithinQuotes = function(){
+
+    let query = this;
+
+    let words = [];
+    let quotesLoc = [], j=0;
+    for (let i=0; i<query.length; i++){
+        if (query[i] === '"') {
+            quotesLoc[j] = i;
+            j++;
+        } 
+    }
+
+    for (let i=0;i+2 <= quotesLoc.length; i+=2){
+        let start = quotesLoc[i] + 1;
+        let end =   quotesLoc[i+1];
+
+        let word = query.substring(start, end);
+        words.push(word);
+    }
+
+    return words;
+}   
+
 io.on('connection', function(socket){
 
     socket.on('addUser', (username, room) => {
@@ -46,7 +72,7 @@ io.on('connection', function(socket){
         socket.join(room);
 
         socket.emit('messageUser', server, `You have connected to room: ${room}`);
-        socket.broadcast.to(room).emit('connected', server, `${username} has connected to this room`);
+        socket.broadcast.to(room).emit('messageUser', server, `${username} has connected to this room`);
 
     });
 
@@ -55,11 +81,20 @@ io.on('connection', function(socket){
         socket.broadcast.to(socket.room).emit('messageUser', server, `${socket.username} left this room`);
     });
 
-    socket.on('chat message', function(message){
+    socket.on('chat message', async function(message){
         console.log(`Message recieved at ${new Date()}`);
         console.log(`Sending ${socket.username}, ${message}, ${socket.room}`);
-        socket.emit('messageUser', socket.username, message);
-        socket.broadcast.to(socket.room).emit('chat message', socket.username, message );
+
+        // Check for gifs
+        let gifs = message.getQueryWithinQuotes();
+
+        let gifUrls = [];
+        if (gifs.length != 0){
+            gifUrls = await giphy.generateGIFURLBulk(gifs);
+        }
+
+        socket.emit('messageUser', socket.username, message, gifUrls);
+        socket.broadcast.to(socket.room).emit('chat message', socket.username, message, gifUrls );
     })
 });
 

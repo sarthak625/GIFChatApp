@@ -29,7 +29,18 @@ async function generateGIFURL(query) {
     }
 }
 
+async function generateGIFURLBulk(queries){
+    let operations = [];
+    
+    queries.forEach(query => {
+        operations.push(generateGIFURL(query));
+    });
+
+    return Promise.all(operations);
+}
+
 module.exports = {
-    generateGIFURL
+    generateGIFURL,
+    generateGIFURLBulk
 }
 
