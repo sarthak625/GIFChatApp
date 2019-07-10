@@ -1,6 +1,21 @@
 require('request');
 const request = require('request-promise');
 const { errors } = require('../status-codes/codes');
+const util = require('util');
+
+require('dotenv').config();
+
+// Set up redis for caching
+const redis = require('redis');
+let redisClient = redis.createClient({
+    port : process.env.REDIS_PORT,
+    host : process.env.IP
+});
+
+redisClient.on('connect', ()=> console.log('Connected to redis successfully'));
+redisClient.on('error', err => console.log(err));
+redisClient.get = util.promisify(redisClient.get);
+redisClient.set = util.promisify(redisClient.set);
 
 let apiEndpoints = {
     'search_gifs_url': 'http://api.giphy.com/v1/gifs/search'
@@ -17,11 +32,19 @@ function searchOneGIF(query) {
 
 async function generateGIFURL(query) {
     try {
-        let response = await searchOneGIF(query);
-
-        // Parse the data as the request returns a stringified JSON object
-        let { data }  = JSON.parse(response);
-        return data[0].images.original.url;
+        // If the data is cached
+        let cachedData = await redisClient.get(query);
+        
+        if (cachedData){
+            return cachedData;
+        }
+        else{
+            let response = await searchOneGIF(query);
+            // Parse the data as the request returns a stringified JSON object
+            let { data }  = JSON.parse(response);
+            await redisClient.set(query, data[0].images.original.url);
+            return data[0].images.original.url;
+        }
     }
     catch (err) {
         console.log(err);
