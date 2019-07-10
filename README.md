@@ -26,6 +26,7 @@ IP=127.0.0.1
 Install dependencies and start the application using these two commands:
 
 > npm install
+
 > npm start
 
 
