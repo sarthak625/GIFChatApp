@@ -61,6 +61,7 @@ String.prototype.getQueryWithinQuotes = function(){
     return words;
 }   
 
+let activeUsers = {};
 io.on('connection', function(socket){
 
     socket.on('addUser', (username, room) => {
@@ -71,14 +72,22 @@ io.on('connection', function(socket){
         socket.room = room;
         socket.join(room);
 
-        socket.emit('messageUser', server, `You have connected to room: ${room}`);
-        socket.broadcast.to(room).emit('messageUser', server, `${username} has connected to this room`);
-
+        if (!activeUsers[room]){
+            activeUsers[room] = {};
+        }
+        activeUsers[room][username] = 1;
+        
+        console.log(activeUsers)
+        socket.emit('messageUser', server, `You have connected to room: ${room}`,[],activeUsers[room]);
+        socket.broadcast.to(room).emit('messageUser', server, `${username} has connected to this room`,[],activeUsers[room]);
     });
 
     socket.on('disconnect', function(){
-        console.log(`${socket.username} got disconnected`);
-        socket.broadcast.to(socket.room).emit('messageUser', server, `${socket.username} left this room`);
+        if (socket.room && socket.username){
+            console.log(`${socket.username} got disconnected`);
+            delete activeUsers[socket.room][socket.username];
+            socket.broadcast.to(socket.room).emit('messageUser', server, `${socket.username} left this room`,[], activeUsers[socket.room]);
+        }
     });
 
     socket.on('chat message', async function(message){
@@ -93,7 +102,7 @@ io.on('connection', function(socket){
             gifUrls = await giphy.generateGIFURLBulk(gifs);
         }
 
-        socket.emit('messageUser', socket.username, message, gifUrls);
+        socket.emit('messageUser', socket.username, message, gifUrls, activeUsers[socket.room]);
         socket.broadcast.to(socket.room).emit('chat message', socket.username, message, gifUrls );
     })
 });

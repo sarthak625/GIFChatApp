@@ -46,24 +46,24 @@ footer{
 
 body .chatbox {
     height: 100%;
-    width: 80%;
+    margin-top: 20px;
 }
 
-.chatbox #room-logo {
+.chatbox .row .chat-area #room-logo {
     width: 40px;
     height: 40px;
 }
 
-.chatbox #messages .list-group-item.active{ 
+.chatbox .row .chat-area #messages .list-group-item.active{ 
     border-color:  var(--room-color);
     background-color: var(--room-color);
 }
 
-.chatbox form .form-group .form-control{
+.chatbox .row .chat-area form .form-group .form-control{
     width: 100%;
 }
 
-.chatbox #messages {
+.chatbox .row .chat-area #messages {
     height: 75%;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -71,6 +71,15 @@ body .chatbox {
 
 .rooms {
     height: 150%;
+}
+
+.chatbox .row{
+    height: 100%;
+}
+
+#activeUsers{
+    text-align: right;
+    padding: 20px;
 }
 
 .rooms .container-fluid .row{
@@ -121,5 +130,10 @@ body .chatbox {
 
     .navbar-nav .nav-item .nav-link .btn{
         display: none;
+    }
+
+    body .chatbox {
+        height: 100%;
+        margin-top: 5px;
     }
 }
