@@ -108,7 +108,7 @@ body .chatbox {
 
 .overlay:hover{
     background: rgba(0, 0, 0, 0.4);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     transition: 450ms;
 }
 
