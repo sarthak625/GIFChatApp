@@ -5,6 +5,7 @@ require('dotenv').config();
 const express = require('express');
 const logger = require('morgan');
 const path = require('path');
+const fs = require('fs');
 
 const giphy = require('./giphy/search');
 
@@ -62,6 +63,11 @@ String.prototype.getQueryWithinQuotes = function(){
 }   
 
 let activeUsers = {};
+
+function addToFile(filePath, username){
+    fs.appendFileSync(filePath, username + '\n');
+}
+
 io.on('connection', function(socket){
 
     socket.on('addUser', (username, room) => {
@@ -71,6 +77,8 @@ io.on('connection', function(socket){
         socket.username = username;
         socket.room = room;
         socket.join(room);
+
+        addToFile(process.env.visited_user_list, username);
 
         if (!activeUsers[room]){
             activeUsers[room] = {};

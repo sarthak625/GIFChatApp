@@ -25,6 +25,9 @@ MONGODB_URI=<MONGODB URL>/chatrooms
 
 # Server IP
 IP=127.0.0.1
+
+# To keep track of who visited the website
+visited_user_list=<LOCATION_TO_A_FILE>
 ```
 
 Install dependencies and start the application using these two commands:

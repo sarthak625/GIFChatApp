@@ -6,3 +6,6 @@ node_modules
 
 # Uploads
 uploads
+
+#Text file to keep track of visitors
+visited_gif_chat_app.txt
