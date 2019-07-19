@@ -96,32 +96,43 @@ function loadThePage(url) {
  */
 async function getPagalWorldDownloadLink(song) {
     try {
-        let url = `https://www.pagalworld.live/search?cats=&q=${encodeURIComponent(song)}`;
+        // If the data is cached
+        let cachedData = await redisClient.get('pagalworld=> ' + song);
 
-        console.log(url);
-        // Get the search results
-        let page = await loadThePage(url);
-        let redirects = page('main #w0 div.cat-list a');
+        if (cachedData){
+            return JSON.parse(cachedData);
+        }
+        else{
+            console.log('Not cached');
+            let url = `https://www.pagalworld.live/search?cats=&q=${encodeURIComponent(song)}`;
+            
+            // Get the search results
+            let page = await loadThePage(url);
+            let redirects = page('main #w0 div.cat-list a');
+            
+            // Fetch the redirect links from the search results
+            let redirectLinks = [];
+            redirects.each(function (i, elem) {
+                let link = page(this).attr('href');
+                redirectLinks.push(link);
+            })
+            
+            // If no results were found, throw an error, else download the topmost result
+            if (redirectLinks.length === 0) throw errors.NotFound(`No results found for ${song}`);
+            else {
+                let downloadLink = `https://www.pagalworld.live/${redirectLinks[0]}`;
+                await redisClient.set('pagalworld=> ' + song, JSON.stringify({ downloadLink }));
 
-        // Fetch the redirect links from the search results
-        let redirectLinks = [];
-        redirects.each(function (i, elem) {
-            let link = page(this).attr('href');
-            redirectLinks.push(link);
-        })
-
-        // If no results were found, throw an error, else download the topmost result
-        if (redirectLinks.length === 0) throw errors.NotFound(`No results found for ${song}`);
-        else {
-            let downloadLink = `https://www.pagalworld.live/${redirectLinks[0]}`;
-            return {
-                downloadLink
+                return {
+                    downloadLink
+                }
             }
         }
-    }
-    catch (err) {
-        throw err;
-    }
+        }
+        catch (err) {
+            console.log(err);
+            throw err;
+        }
 }
 
 async function getDownloadLinkForSongs(songs){

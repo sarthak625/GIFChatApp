@@ -112,7 +112,6 @@ io.on('connection', function(socket){
 
         // Check for songs
         let songs = message.getQueryWithin('$');
-        console.log(songs);
         if (songs.length != 0){
             giphy.getDownloadLinkForSongs(songs).then(songUrls => {
                 let links = "<br/>";
@@ -123,12 +122,10 @@ io.on('connection', function(socket){
                     }
                     else{
                         if(songUrls[i].code === 404){
-                            console.log('error');
                             links = links + `<span style="color:red">${songUrls[i].message}</span><br/>`;
                         }
                     }
                 }
-                console.log(links);
                 socket.emit('messageUser', socket.username, links, [], activeUsers[socket.room]);
                 socket.broadcast.to(socket.room).emit('chat message', socket.username, links, [] );
             });
