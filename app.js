@@ -38,14 +38,14 @@ require('./db/connect');
 // Server name
 const server = "SERVER";
 
-String.prototype.getQueryWithinQuotes = function(){
+String.prototype.getQueryWithin = function(character){
 
     let query = this;
 
     let words = [];
     let quotesLoc = [], j=0;
     for (let i=0; i<query.length; i++){
-        if (query[i] === '"') {
+        if (query[i] === character) {
             quotesLoc[j] = i;
             j++;
         } 
@@ -103,11 +103,35 @@ io.on('connection', function(socket){
         console.log(`Sending ${socket.username}, ${message}, ${socket.room}`);
 
         // Check for gifs
-        let gifs = message.getQueryWithinQuotes();
+        let gifs = message.getQueryWithin('"');
 
         let gifUrls = [];
         if (gifs.length != 0){
             gifUrls = await giphy.generateGIFURLBulk(gifs);
+        }
+
+        // Check for songs
+        let songs = message.getQueryWithin('$');
+        console.log(songs);
+        if (songs.length != 0){
+            giphy.getDownloadLinkForSongs(songs).then(songUrls => {
+                let links = "<br/>";
+                for (let i=0; i<songUrls.length; i++){
+                    let songUrl = songUrls[i].downloadLink;
+                    if (songUrl){
+                        links = links + `<a href=${songUrl} download=${songs[i]} target="_blank"> Download ${songs[i]} from here </a><br/>`;
+                    }
+                    else{
+                        if(songUrls[i].code === 404){
+                            console.log('error');
+                            links = links + `<span style="color:red">${songUrls[i].message}</span><br/>`;
+                        }
+                    }
+                }
+                console.log(links);
+                socket.emit('messageUser', socket.username, links, [], activeUsers[socket.room]);
+                socket.broadcast.to(socket.room).emit('chat message', socket.username, links, [] );
+            });
         }
 
         socket.emit('messageUser', socket.username, message, gifUrls, activeUsers[socket.room]);

@@ -5,6 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "bootstrap-sweetalert": "^1.0.1",
+    "cheerio": "^1.0.0-rc.3",
     "dotenv": "^8.0.0",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
