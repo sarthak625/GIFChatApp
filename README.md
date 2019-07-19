@@ -38,8 +38,7 @@ Install dependencies and start the application using these two commands:
 
 # Visit the website here
 
-http://ec2-13-126-170-21.ap-south-1.compute.amazonaws.com:3000
-
+http://13.235.46.182:3000
 
 
 
