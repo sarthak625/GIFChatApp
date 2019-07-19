@@ -84,8 +84,6 @@ io.on('connection', function(socket){
             activeUsers[room] = {};
         }
         activeUsers[room][username] = 1;
-        
-        console.log(activeUsers)
         socket.emit('messageUser', server, `You have connected to room: ${room}`,[],activeUsers[room]);
         socket.broadcast.to(room).emit('messageUser', server, `${username} has connected to this room`,[],activeUsers[room]);
     });

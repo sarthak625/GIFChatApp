@@ -1,7 +1,6 @@
 <script>
     <% if (locals.response)  { %>
     let response = <%- JSON.stringify(response) %>
-    console.log(response);
     if (response.code >= 300) {
         swal("Something went wrong", response.message, "error");
     }

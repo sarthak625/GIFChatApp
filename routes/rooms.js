@@ -98,7 +98,6 @@ router.get('/room/view/:name', async (req, res) => {
     try {
         
         let name = req.params.name;
-        console.log(name);
         // Get db data for the name
         let data = await ChatRoom.findOne({ name });
 

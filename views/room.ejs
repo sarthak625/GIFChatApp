@@ -57,9 +57,11 @@
             var socket = io();
 
             socket.on('connect', function () {
+                let welcomeMessage = `This is a typical chat application with a subtle twist. Whatever you write within double quotes (") will be GIFFYfied and for whatever song you write within $$, a redirect link to pagalworld will be generated.\n\n For example: \n hey "dude", check out my new ringtone $babaji ki booti$ \n\n Remember, all your meme/image searches are cached for faster response. Try it out yourself!`;
+
                 swal({
                     title: "Information",
-                    text: "Welcome to your room. This is a typical chat application with a subtle twist. Whatever you write within quotes \"\" will be GIFFYfied. Try it out yourself!",
+                    text: welcomeMessage,
                     icon: 'info',
                     button: 'Click here to proceed'
                 }).then(data => {
@@ -83,13 +85,11 @@
 
             socket.on('messageUser', (username, data, gifs, activeUsers) => {
                 $('#messages').append(`<li class="list-group-item list-group-item-light"> ${username}: ${data} </li>`);
-                console.log(gifs);
                 if (gifs.length !== 0) {
                     gifs.forEach(gif => {
                         $('#messages').append(`<li class="list-group-item list-group-item-light"> <img src="${gif}" class="gif-message"></img></li>`);
                     })
                 }
-                console.log(activeUsers);
                 $(".users").empty();
                 for (let users in activeUsers) {
                     $(".users").append(`<li class="user-list list-group-item">${users}</li>`);
