@@ -38,7 +38,7 @@ Install dependencies and start the application using these two commands:
 
 # Visit the website here
 
-http://13.235.46.182:3000
+http://52.66.146.130:3000/
 
 
 
